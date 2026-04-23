@@ -55,5 +55,50 @@ def chat():
     response = rag_chain.invoke({"input": msg})
     return str(response["answer"])
 
+@app.route("/hospitals", methods=["POST"])
+def get_hospitals():
+    import requests
+
+    lat = float(request.form.get("lat"))
+    lon = float(request.form.get("lon"))
+
+    # small area around user (approx 5km)
+    delta = 0.05
+
+    viewbox = f"{lon - delta},{lat - delta},{lon + delta},{lat + delta}"
+
+    url = "https://nominatim.openstreetmap.org/search"
+
+    params = {
+        "q": "hospital",
+        "format": "json",
+        "limit": 5,
+        "bounded": 1,
+        "viewbox": viewbox
+    }
+
+    try:
+        response = requests.get(url, params=params, headers={
+            "User-Agent": "medical-chatbot"
+        }, timeout=10)
+
+        data = response.json()
+
+    except:
+        return jsonify({"error": True})
+
+    hospitals = []
+
+    for place in data:
+        hospitals.append({
+            "name": place.get("display_name", "Hospital"),
+            "lat": place.get("lat"),
+            "lon": place.get("lon")
+        })
+
+    if not hospitals:
+        return jsonify({"error": True})
+
+    return jsonify({"error": False, "data": hospitals})
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080, debug=True)

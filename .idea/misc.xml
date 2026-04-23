@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="Python 3.11 (RAG-LLM-medical-chatbot)" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.11 (RAG-LLM-medical-chatbot)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.11 (Medical_Assistant-RAG)" project-jdk-type="Python SDK" />
 </project>

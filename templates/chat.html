@@ -18,8 +18,8 @@
             <div class="tip-box"><strong>Hydration:</strong> Drink 3L of water for optimal kidney function.</div>
             <div class="tip-box"><strong>Posture:</strong> Take a 5-min stretch break every hour.</div>
 
-            <!-- Hospital Redirect Icon -->
-            <a href="#" class="hospital-btn" title="Find Nearby Hospitals">
+            <!-- Hospital Button -->
+            <a href="#" class="hospital-btn" onclick="findHospitals()" title="Find Nearby Hospitals">
                 <i class="fas fa-hospital-symbol"></i>
                 <span>Locate Hospitals</span>
             </a>
@@ -101,6 +101,55 @@
                 });
             });
         });
+
+        // ✅ ADDED HOSPITAL LOCATOR FUNCTION (ONLY ADDITION)
+        function findHospitals() {
+            if (!navigator.geolocation) {
+                alert("Geolocation not supported");
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(position => {
+                let lat = position.coords.latitude;
+                let lon = position.coords.longitude;
+
+                let mapLink = `https://www.google.com/maps/search/hospitals/@${lat},${lon},14z`;
+
+                $.ajax({
+                    url: "/hospitals",
+                    type: "POST",
+                    data: { lat: lat, lon: lon },
+
+                    success: function(res) {
+
+                        let hospitalText = "🏥 Nearby Hospitals:<br><br>";
+
+                        if (!res.error) {
+
+                            res.data.forEach(h => {
+                                hospitalText += `• <strong>${h.name}</strong><br>`;
+                                hospitalText += `<a href="https://www.google.com/maps?q=${h.lat},${h.lon}" target="_blank">View on Map</a><br><br>`;
+                            });
+
+                        } else {
+                            hospitalText += `<a href="${mapLink}" target="_blank">View Hospitals on Map</a>`;
+                        }
+
+                        var botHtml = `<div class="msg-row bot fade-in">
+                            <div class="bubble bot-bubble">${hospitalText}</div>
+                        </div>`;
+
+                        $("#messageFormeight").append(botHtml);
+
+                        let chatBody = document.getElementById("messageFormeight");
+                        chatBody.scrollTop = chatBody.scrollHeight;
+                    }
+                });
+
+            }, () => {
+                alert("Location permission denied");
+            });
+        }
     </script>
 </body>
 </html>
