@@ -20,7 +20,7 @@ os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
 os.environ["GROQ_API_KEY"]     = GROQ_API_KEY
 
 embeddings = download_hugging_face_embeddings()
-index_name = "medical-chatbot"
+index_name = "medicalassistant"
 
 docsearch = PineconeVectorStore.from_existing_index(
     index_name=index_name,
