@@ -1,7 +1,7 @@
 # 🏥 Medical AI Expert — RAG-Based Chatbot
 
 A full-stack AI-powered medical assistant built using **Flask**, **Pinecone**, **Groq LLM**, and **HuggingFace embeddings**.
-This system uses **Retrieval-Augmented Generation (RAG)** to provide accurate, context-aware medical answers from custom PDF data.
+This system leverages **Retrieval-Augmented Generation (RAG)** to deliver accurate, context-aware medical responses based on custom medical documents.
 
 ---
 
@@ -13,7 +13,9 @@ This project implements a real-world AI architecture where user queries are answ
 * 📄 Context retrieval from medical documents
 * 🤖 Large Language Model (LLM) reasoning
 
-The system ensures responses are grounded in actual data rather than purely generated text.
+The system ensures responses are grounded in real data rather than purely generated text.
+
+Additionally, the application includes a **location-based hospital locator**, enabling users to find nearby hospitals with real-time navigation.
 
 ---
 
@@ -25,6 +27,7 @@ The system ensures responses are grounded in actual data rather than purely gene
 * 🔎 Vector similarity search with Pinecone
 * 📚 Custom knowledge base using PDF documents
 * 🌐 Interactive web-based chat interface
+* 📍 **Geolocation-based hospital locator (OpenStreetMap + Google Maps integration)**
 * 🧩 Modular and scalable backend design
 
 ---
@@ -63,13 +66,14 @@ The system ensures responses are grounded in actual data rather than purely gene
 
 ## ⚙️ Tech Stack
 
-| Layer        | Technology            |
-| ------------ | --------------------- |
-| 🖥 Backend   | Flask (Python)        |
-| 🤖 LLM       | Groq (LLaMA 3)        |
-| 🧠 Embedding | HuggingFace           |
-| 📦 Vector DB | Pinecone              |
-| 🎨 Frontend  | HTML, CSS, JavaScript |
+| Layer        | Technology                             |
+| ------------ | -------------------------------------- |
+| 🖥 Backend   | Flask (Python)                         |
+| 🤖 LLM       | Groq (LLaMA 3)                         |
+| 🧠 Embedding | HuggingFace                            |
+| 📦 Vector DB | Pinecone                               |
+| 🎨 Frontend  | HTML, CSS, JavaScript                  |
+| 📍 Maps API  | OpenStreetMap (Nominatim), Google Maps |
 
 ---
 
@@ -126,7 +130,7 @@ pip install -r requirements.txt
 
 ## 🔐 Environment Variables
 
-Create a `.env` file in root directory:
+Create a `.env` file in the root directory:
 
 ```
 PINECONE_API_KEY=your_pinecone_api_key
@@ -194,17 +198,18 @@ docker run -p 8080:8080 -e PINECONE_API_KEY=your_key -e GROQ_API_KEY=your_key me
 
 * 📌 For educational purposes only
 * ⚠️ Not a substitute for professional medical advice
-* 📊 Accuracy depends on uploaded data
+* 📊 Response accuracy depends on uploaded data
 
 ---
 
 ## 🚧 Future Improvements
 
-* 📍 Hospital locator integration
+* 🧠 Intelligent hospital recommendation system
 * 🎤 Voice-based interaction
-* 💾 Chat memory & history
+* 💾 Chat history & memory
 * 📈 Multi-document scaling
-* 🎨 Advanced UI (animations & themes)
+* 🎨 Advanced UI (animations, themes)
+* 🗺️ Embedded map view (Leaflet integration)
 
 ---
 
@@ -217,4 +222,4 @@ AI/ML Enthusiast | Full-Stack Developer
 
 ## 📜 License
 
-This project is open-source under the MIT License.
+This project is open-source and available under the MIT License.
