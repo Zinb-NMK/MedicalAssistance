@@ -1,4 +1,5 @@
 from flask import Flask, render_template, jsonify, request
+import requests
 from src.helper import download_hugging_face_embeddings
 from langchain_pinecone import PineconeVectorStore
 
@@ -30,7 +31,7 @@ retriever = docsearch.as_retriever(search_type="similarity", search_kwargs={"k":
 
 # ---------- free Groq model ----------
 chatModel = ChatGroq(
-    model="llama-3.1-8b-instant",   # or 8b / 70b / mixtral-8x7b etc.
+    model="openai/gpt-oss-20b",   # or 8b / 70b / mixtral-8x7b etc.
     groq_api_key=GROQ_API_KEY,
     temperature=0
 )
@@ -57,8 +58,6 @@ def chat():
 
 @app.route("/hospitals", methods=["POST"])
 def get_hospitals():
-    import requests
-
     lat = float(request.form.get("lat"))
     lon = float(request.form.get("lon"))
 
@@ -100,5 +99,6 @@ def get_hospitals():
         return jsonify({"error": True})
 
     return jsonify({"error": False, "data": hospitals})
-if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=8080, debug=True)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host="0.0.0.0", port=port, debug=True)
